@@ -46,11 +46,11 @@ let app = http.createServer(function(req, res){
 
             res.end(`            
             <html>
-            <head>
-            <title>WEB1 - ${title} </title>
-            <meta charset="utf-8">
+                <head>
+                    <title>WEB1 - ${title} </title>
+                    <meta charset="utf-8">
 
-            </head>
+                </head>
             <body>
             <h1><a href="/web">WEB</a></h1>
             <ol>
