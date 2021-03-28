@@ -22,12 +22,12 @@ let app = http.createServer(function(req, res){
 
         if(queryObject.id==undefined){
             res.end(`
-            <html>
-                <head>
-                <title>WEB1 - Welcome</title>
-                <meta charset="utf-8">
+                <html>
+                    <head>
+                        <title>WEB1 - Welcome</title>
+                        <meta charset="utf-8">
 
-                </head>
+                    </head>
                     <body>
                         <h1><a href="/web">WEB</a></h1>
                         <ol>
@@ -48,11 +48,11 @@ let app = http.createServer(function(req, res){
 
             res.end(`            
             <html>
-            <head>
-            <title>WEB1 - ${title} </title>
-            <meta charset="utf-8">
+                <head>
+                    <title>WEB1 - ${title} </title>
+                    <meta charset="utf-8">
 
-            </head>
+                </head>
                 <body>
                     <h1><a href="/web">WEB</a></h1>
                     <ol>
