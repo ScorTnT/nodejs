@@ -2,11 +2,12 @@ const http = require('http');
 const url = require('url');
 const fs  = require('fs');
 
-let app = http.createServer(function(req, res){   // app 선언 및 createServer함수 실행
-    const pathname = url.parse(req.url,false).pathname  // pathname 으로 url 받아들이기 위한 설정
-    if(pathname=="/web"){                            // /web 으로 들어오면
+let app = http.createServer(function(req, res){
+    const pathname = url.parse(req.url,false).pathname
+    console.log(pathname)
+    if(pathname=="/web"){
 
-        const queryObject = url.parse(req.url,true).query; 
+        const queryObject = url.parse(req.url,true).query;
 
         var data = fs.readFileSync('./data.json', 'utf8');
         const dat = JSON.parse(data);
@@ -95,7 +96,7 @@ let app = http.createServer(function(req, res){   // app 선언 및 createServer
         req.on('end', function () {         // data 수신이 완료된 후, callback 함수 실행.   
             const partdata = jsonData.split('&description=')   // jsonData를 찢어서 partdata로 설정함. { title, description 으로 나누기위한 1단계 }
             const titledata = partdata[0].split('title=')[1]  // partdata의 'title='뒷부분을 titledata로 설정
-            const desdata = partdata[1]                       // partdata에서 'description=' 뒷부분을 desdata로 설정
+            const descriptiondata = partdata[1]                       // partdata에서 'description=' 뒷부분을 descriptiondata로 설정
 
             var data = fs.readFileSync('./data.json', 'utf8'); // /data.json 파일을 한글형식제공으로 읽어들이고 data 라는 변수로 설정
             const dat = JSON.parse(data);                      // 설정된 data 문자열 전체를 JSON 형식으로 변환함
@@ -103,21 +104,33 @@ let app = http.createServer(function(req, res){   // app 선언 및 createServer
             dat.push(                         // 사용자가 입력한 title, description을 하나의 객체로 묶어 dat배열에 마지막 부분에 push(삽입) 하기 위해서 쓰여짐
                 {
                     "title": titledata ,
-                    "description": desdata
+                    "description": descriptiondata
                 }                                  // 기존 형식에 맞게 push(삽입)
                 )                                  // push(삽입)완료
 
-            const filteredArr = dat.reduce((acc, current) => {               // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
-                const x = acc.find(item => item.title === current.title );   // title이 같으면 ; > 내용만 추가하기 위함.  // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
-                if (x) {                           // 비교해서 같다면
-                  return acc.concat([current]);     // 최근 배열을 누적
-                } 
-                else {                                 //같지 않다면
-                    return acc.concat([current]);      // 누적 return      
+            const filteredArr = dat.reduce((acc, current) => {     // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
+                const x = acc.find(item => item.title === current.title); // title 찾아 비교 // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
+                console.log([current])
+                if (!x) {                                 // x 비교해서 같지 않다면
+                    return acc.concat([current]);           // 최근 배열을 누적후 return
+                } else {                                  // x 비교가 같다면 { title이 중복 되었다면 }
+                const y = acc.find(item => item.description === current.description)  //description 찾아 비교후 같음을 y라 칭함
+                    if (!y) {              // y 비교해서 description 같지 않다면
+                        
+                                           // 같은 title에 description 추가
+                            
+
+
+
+                         return 
+                    } else{                // y 비교해서 description 같다면 
+                        return acc         // acc return
+                    } 
+                    
+
+                                               // return acc.concat();                         // description만 추가해서 return      
                 }
-                
               }, []);
-              console.log(current)
 
             const newdata = JSON.stringify(filteredArr)     // 최종 결과물 filteredArr[]을 JSON형식 문자열로 변환 후 newdata라 칭함
             fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
