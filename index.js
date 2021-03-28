@@ -108,12 +108,12 @@ let app = http.createServer(function(req, res){   // app 선언 및 createServer
                 )                                  // push(삽입)완료
 
             const filteredArr = dat.reduce((acc, current) => {               // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
-                const x = acc.find(item => item.title === current.title );   // title이 같으면 ; > 내용만 추가하기 위함.  // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
-                if (x) {                           // 비교해서 같다면
+                const x = acc.find(item => item.title === current.title && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
+                if (!x) {                           // 다르면
                   return acc.concat([current]);     // 최근 배열을 누적
                 } 
                 else {                                 //같지 않다면
-                    return acc.concat([current]);      // 누적 return      
+                    return acc ;      //       
                 }
                 
               }, []);
