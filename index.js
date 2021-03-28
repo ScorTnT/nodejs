@@ -107,14 +107,17 @@ let app = http.createServer(function(req, res){   // app 선언 및 createServer
                 }                                  // 기존 형식에 맞게 push(삽입)
                 )                                  // push(삽입)완료
 
-            const filteredArr = dat.reduce((acc, current) => {     // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
-                const x = acc.find(item => item.title === current.title && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
-                if (!x) {                           // 비교해서 같지 않다면
+            const filteredArr = dat.reduce((acc, current) => {               // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
+                const x = acc.find(item => item.title === current.title );   // title이 같으면 ; > 내용만 추가하기 위함.  // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
+                if (x) {                           // 비교해서 같다면
                   return acc.concat([current]);     // 최근 배열을 누적
-                } else {                              // 비교가 같다면 { 중복 되었다면 }
-                  return acc;                         // 누적하지 않고 return      
+                } 
+                else {                                 //같지 않다면
+                    return acc.concat([current]);      // 누적 return      
                 }
+                
               }, []);
+              console.log(current)
 
             const newdata = JSON.stringify(filteredArr)     // 최종 결과물 filteredArr[]을 JSON형식 문자열로 변환 후 newdata라 칭함
             fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
