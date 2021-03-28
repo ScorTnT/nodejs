@@ -2,12 +2,11 @@ const http = require('http');
 const url = require('url');
 const fs  = require('fs');
 
-let app = http.createServer(function(req, res){
-    const pathname = url.parse(req.url,false).pathname
-    console.log(pathname)
-    if(pathname=="/web"){
+let app = http.createServer(function(req, res){   // app 선언 및 createServer함수 실행
+    const pathname = url.parse(req.url,false).pathname  // pathname 으로 url 받아들이기 위한 설정
+    if(pathname=="/web"){                            // /web 으로 들어오면
 
-        const queryObject = url.parse(req.url,true).query;
+        const queryObject = url.parse(req.url,true).query; 
 
         var data = fs.readFileSync('./data.json', 'utf8');
         const dat = JSON.parse(data);
