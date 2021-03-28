@@ -117,8 +117,7 @@ let app = http.createServer(function(req, res){   // app 선언 및 createServer
                 }
                 
               }, []);
-              console.log(current)
-
+              
             const newdata = JSON.stringify(filteredArr)     // 최종 결과물 filteredArr[]을 JSON형식 문자열로 변환 후 newdata라 칭함
             fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
 
