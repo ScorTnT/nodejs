@@ -110,20 +110,25 @@ let app = http.createServer(function(req, res){
 
             const filteredArr = dat.reduce((acc, current) => {     // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
                 const x = acc.find(item => item.title === current.title); // title 찾아 비교 // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
-                console.log([current])
-                if (!x) {                                 // x 비교해서 같지 않다면
+                if (!x) {                                 // !x . 비교해서 같지 않다면
                     return acc.concat([current]);           // 최근 배열을 누적후 return
-                } else {                                  // x 비교가 같다면 { title이 중복 되었다면 }
-                const y = acc.find(item => item.description === current.description)  //description 찾아 비교후 같음을 y라 칭함
-                    if (!y) {              // y 비교해서 description 같지 않다면
+                } else {                                  // x . 비교가 같다면 { title이 중복 되었다면 }
+                    const y = acc.find(item => item.title === current.title && item.description === current.description)  //description 찾아 비교후 같음을 y라 칭함
+                    const z = acc.find(item => item.title === current.title && item.description != current.description)
+                
+                    console.log(dat[dat.length - 1].title)   // x . title 뽑기
+                    console.log(current.title)               // x . title 뽑기
+                    console.log(titledata)
+                    console.log(dat[dat.length - 1].description)   // x . current.description 뽑기
+                    console.log(z.description) // x . acc.description 뽑기
+                    console.log(!y)
+
+
+                    if (!y) {              // x . !y . description 같지 않다면
                         
                                            // 같은 title에 description 추가
-                            
-
-
-
-                         return 
-                    } else{                // y 비교해서 description 같다면 
+                         return acc
+                    } else{                // x . y . description 같다면 
                         return acc         // acc return
                     } 
                     
