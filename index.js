@@ -19,24 +19,10 @@ else if(pathname=="/web/create_process"){ //create_process 로 접속
             const x = acc.find(item => item.title === current.title); // title 찾아 비교 // && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
             if (!x) {                                 // !x . 비교해서 같지 않다면
                 return acc.concat([current]);           // 최근 배열을 누적후 return
-            } else {                                  // x . 비교가 같다면 { title이 중복 되었다면 }
-                const y = acc.find(item => item.title === current.title && item.description === current.description)  //description 찾아 비교후 같음을 y라 칭함
-                const z = acc.find(item => item.title === current.title && item.description != current.description)
-            
-                console.log(dat[dat.length - 1].title)   // x . title 뽑기
-                console.log(current.title)               // x . title 뽑기
-                console.log(titledata)
-                console.log(dat[dat.length - 1].description)   // x . current.description 뽑기
-                console.log(z.description) // x . acc.description 뽑기
-                console.log(!y)
-
-                if (z) {              // title같고 . description 같지 않다면  !!! > 내용추가 방향으로 가고싶다!
-                    
-                                       // 같은 title에 description 추가
-                     return acc
-                } else{                // title같고 . description 같다면 
-                    return acc         // acc return > 
-                } 
+            } else {    
+                res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
+                res.setHeader('Location', '/web/update');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
+                res.end();                                      // 종료
                                            // return acc.concat();                         // description만 추가해서 return      
             }
           }, []);
@@ -44,7 +30,7 @@ else if(pathname=="/web/create_process"){ //create_process 로 접속
         fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
         res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
         res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
-         res.end();                                      // 종료
+        res.end();                                      // 종료
 
     })
 
@@ -79,6 +65,11 @@ else if(pathname=="/web/create_process"){ //create_process 로 접속
         fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
         res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
         res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
-         res.end();                                      // 종료
+        res.end();                                      // 종료
     })
 }
+
+
+res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
+res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
+ res.end();                                      // 종료
