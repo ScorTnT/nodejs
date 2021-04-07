@@ -112,12 +112,14 @@ let app = http.createServer(function(req, res){
                 )                                  // push(삽입)완료
 
             const filteredArr = dat.reduce((acc, current) => {               // 빈배열 acc를 설정하고 각 배열의 요소(current)를 반복함 { 중복제거 } => 최종 결과물을 filteredArr[]로 설정 
-                const x = acc.find(item => item.title === current.title && item.description === current.description);    // title과 description 요소들을 찾아 비교하여 x라 칭함
+                const x = acc.find(item => item.title === current.title );    // title과 description 요소들을 찾아 비교하여 x라 칭함
                 if (!x) {                           // 다르면
                   return acc.concat([current]);     // 최근 배열을 누적
                 } 
-                else {                                 // 같지 않다면
-                    return acc ;                      // 
+                else {                                 // 같으면
+                    res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
+                    res.setHeader('Location', '/web/update');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
+                    res.end();                                      // 종료
                 }
               }, []);
               
