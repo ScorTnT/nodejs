@@ -7,7 +7,7 @@ let app = http.createServer(function(req, res){
     console.log(pathname)
 
 
-    // web page
+    // web(main)-page
     if(pathname=="/web"){
 
         const queryObject = url.parse(req.url,true).query;
@@ -22,7 +22,7 @@ let app = http.createServer(function(req, res){
             `
         })
 
-
+        // main-page + description-page
         if(queryObject.id==undefined){
             res.end(`
                 <html>
@@ -44,7 +44,6 @@ let app = http.createServer(function(req, res){
                 </html>
             `);
         }
-
         else {
             const title = dat[queryObject.id].title
             const description = dat[queryObject.id].description
@@ -71,9 +70,7 @@ let app = http.createServer(function(req, res){
                 </body>
             </html>
             `)
-
         }
-        
     }
 
 
@@ -130,10 +127,7 @@ let app = http.createServer(function(req, res){
             res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
 	        res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
  	        res.end();                                      // 종료
-
         })
-    
-
     }
 
 
@@ -184,9 +178,6 @@ let app = http.createServer(function(req, res){
             res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
 	        res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
  	        res.end();                                      // 종료
-
-
-
         })
     }
 
@@ -216,18 +207,14 @@ let app = http.createServer(function(req, res){
         res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
         res.setHeader('Location', '/web');              // 강제로 옮겨질 페이지의 주소가 setHeader 매개변수에 쓰여있어야 하며 그 주소는 '/web'임
         res.end();                                      // 종료
-
-        
-
     }
 
 
 
+    // error or undefined 
     else {
         return res.writeHead(404)
     }
-
-
 });
 
 
