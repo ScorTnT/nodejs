@@ -4,9 +4,6 @@ const fs  = require('fs');
 
 let app = http.createServer(function(req, res){
     const pathname = url.parse(req.url,false).pathname
-    console.log(pathname)
-
-
     // web(main)-page
     if(pathname=="/web"){
 
@@ -112,7 +109,6 @@ let app = http.createServer(function(req, res){
                     res.end();                                      // 종료
                 }
               }, []);
-
             const newdata = JSON.stringify(filteredArr)     // 최종 결과물 filteredArr[]을 JSON형식 문자열로 변환 후 newdata라 칭함
             fs.writeFileSync('./data.json',newdata)         // 문자열 newdata를 ./data.json 파일에 덮어 씌움
             res.statusCode = 302;                           // 서버가 사용자에게 강제로 페이지를 옮기라고 지시하기 위한 statusCode.
