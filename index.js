@@ -168,11 +168,15 @@ let app = http.createServer(function(req, res){
         var data = fs.readFileSync('./data.json', 'utf8');
         const dat = JSON.parse(data);
         const title = dat[queryObject.id].title
+        const description = dat[queryObject.id].description
         console.log(title)
+        console.log(description)
         res.end(`
         <body>
             <h1>Delete Page</h1>
-            <h2>Delete ${title}
+            <h2>Delete ${title}</h2>
+            ${description}
+            <br/><br/>
             <a href="/web/delete_process?id=${queryObject.id}"><button type="button">Delete!</button></a>
         </body>
         `)
